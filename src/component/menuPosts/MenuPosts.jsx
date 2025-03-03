@@ -19,7 +19,7 @@ const MenuPosts = ({ withImage }) => {
           </h3>
           <div className={styles.detail}>
             <span className={styles.username}>John Doe</span>
-            <span className={styles.date}> - 10.03.2023</span>
+            <span className={styles.date}> - 03.03.2025</span>
           </div>
         </div>
       </Link>
@@ -38,7 +38,7 @@ const MenuPosts = ({ withImage }) => {
           </h3>
           <div className={styles.detail}>
             <span className={styles.username}>John Doe</span>
-            <span className={styles.date}> - 10.03.2023</span>
+            <span className={styles.date}> - 03.03.2025</span>
           </div>
         </div>
       </Link>
@@ -55,7 +55,7 @@ const MenuPosts = ({ withImage }) => {
           </h3>
           <div className={styles.detail}>
             <span className={styles.username}>John Doe</span>
-            <span className={styles.date}> - 10.03.2023</span>
+            <span className={styles.date}> - 03.03.2025</span>
           </div>
         </div>
       </Link>
@@ -74,7 +74,7 @@ const MenuPosts = ({ withImage }) => {
           </h3>
           <div className={styles.detail}>
             <span className={styles.username}>John Doe</span>
-            <span className={styles.date}> - 10.03.2023</span>
+            <span className={styles.date}> - 03.03.2025</span>
           </div>
         </div>
       </Link>

@@ -18,11 +18,11 @@ const Footer = () => {
           repellendus dorales.
         </p>
         <div className={styles.icons}>
-          <Image src="/facebook.png" alt="" width={18} height={18} />
-          <Image src="/instagram.png" alt="" width={18} height={18} />
-          <Image src="/tiktok.png" alt="" width={18} height={18} />
-          <Image src="/youtube.png" alt="" width={18} height={18} />
-        </div>
+        <Image src="/github.png" alt="github" width={24} height={24} />
+        <Image src="/instagram.png" alt="instagram" width={24} height={24} />
+        <Image src="/linkedin.png" alt="linkedin" width={24} height={24} />
+        <Image src="/youtube.png" alt="youtube" width={24} height={24} />
+      </div>
       </div>
       <div className={styles.links}>
         <div className={styles.list}>
