@@ -27,11 +27,11 @@
 }
 
 .socialButton:first-child{
-    background-color: black;
+    background-color: #ff5555;
 }
 
 .socialButton:nth-child(2){
-    background-color: #ff5555;
+    background-color: black;
 }
 
 .socialButton:nth-child(3){
