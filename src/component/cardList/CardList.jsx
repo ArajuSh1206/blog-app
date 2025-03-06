@@ -7,7 +7,7 @@ import Pagination from "../pagination/Pagination";
 const CardList = ({ page }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalPages, setTotalPages] = useState(1);  // Track the total pages
+  const [count, setCount] = useState(0); // Track total post count
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -17,8 +17,8 @@ const CardList = ({ page }) => {
           throw new Error("Failed to fetch posts");
         }
         const data = await res.json();
-        setPosts(data.posts);  // Assuming the response contains a posts array
-        setTotalPages(Math.ceil(data.count / 2));  // Assuming 2 posts per page
+        setPosts(data.posts);
+        setCount(data.count); // Ensure total count is set correctly
       } catch (error) {
         console.error("Error fetching posts:", error);
         setPosts([]);
@@ -29,6 +29,11 @@ const CardList = ({ page }) => {
 
     fetchPosts();
   }, [page]);
+
+  const POSTS_PER_PAGE = 2;
+  const totalPages = Math.ceil(count / POSTS_PER_PAGE);
+  const hasPrev = page > 1;
+  const hasNext = page < totalPages;
 
   return (
     <div className={styles.container}>
@@ -42,8 +47,8 @@ const CardList = ({ page }) => {
           ))}
         </div>
       )}
-      {/* Pagination controls */}
-      <Pagination page={page} totalPages={totalPages} />
+      {/* Pass correct pagination props */}
+      <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
     </div>
   );
 };
