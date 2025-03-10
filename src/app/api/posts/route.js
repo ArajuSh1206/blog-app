@@ -5,18 +5,19 @@ export const GET = async (request) => {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
     const POST_PER_PAGE = 2;
+    const cat = searchParams.get("cat") || "";
 
     try {
-        // Fetch the posts for the current page
+        const where = cat ? { catSlug: cat } : {}; 
+
         const posts = await prisma.Post.findMany({
             take: POST_PER_PAGE,
             skip: POST_PER_PAGE * (page - 1),
+            where, 
         });
 
-        // Get the total number of posts
-        const count = await prisma.Post.count();
+        const count = await prisma.Post.count({ where }); // Fix: Use `where` instead of `query.where`
 
-        // Return both posts and the total count
         return new NextResponse(JSON.stringify({ posts, count }), { status: 200 });
     } catch (error) {
         console.error(error);

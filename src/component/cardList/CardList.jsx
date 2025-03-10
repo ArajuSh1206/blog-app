@@ -4,21 +4,21 @@ import styles from "./cardList.module.css";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
 
-const CardList = ({ page }) => {
+const CardList = ({ page, cat }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0); // Track total post count
+  const [count, setCount] = useState(0); 
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/posts?page=${page}`);
+        const res = await fetch(`/api/posts?page=${page}&cat=${cat || ""}`);
         if (!res.ok) {
           throw new Error("Failed to fetch posts");
         }
         const data = await res.json();
         setPosts(data.posts);
-        setCount(data.count); // Ensure total count is set correctly
+        setCount(data.count); 
       } catch (error) {
         console.error("Error fetching posts:", error);
         setPosts([]);
@@ -47,7 +47,6 @@ const CardList = ({ page }) => {
           ))}
         </div>
       )}
-      {/* Pass correct pagination props */}
       <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
     </div>
   );
