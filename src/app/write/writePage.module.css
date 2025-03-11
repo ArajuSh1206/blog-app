@@ -1,17 +1,54 @@
-.container{
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 95%; 
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
 
+.input {
+    padding: 20px;
+    font-size: 36px; 
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%; 
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 40px; 
 }
 
 .editor {
     display: flex;
+    flex-direction: column;
     gap: 20px;
-    height: 700px;
     position: relative;
+    width: 100%;
+}
+
+.ql-container {
+    width: 100%; 
+    min-width: 800px; /* Increased width */
+    min-height: 500px; 
+    max-height: 900px; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow-y: auto; 
+}
+
+.ql-editor {
+    padding: 20px;
+    background-color: #f8f8f8;
+    font-size: 20px; 
+    line-height: 1.8;
+    min-height: 500px; 
+    height: auto; 
+    word-wrap: break-word; 
 }
 
 .button, .addButton {
-    width : 36px;
-    height: 36px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background-color: transparent;
     border: 1px solid var(--textColor);
@@ -33,31 +70,60 @@
     z-index: 999;
     width: 100%;
     left: 50%;
-}
-
-.input {
-    padding: 50px;
-    font-size: 64px;
-    border: none;
-    outline: none;
-    background-color: transparent;
-}
-.input::placeholder {
-    color: #b3b3b1;
-}
-
-.textArea {
-    width: 100px;
+    top: 50px;
+    transform: translateX(-50%);
 }
 
 .publish {
-    position: absolute;
-    top: 30px;
-    right: 20px;
-    padding: 10px 20px;
+    padding: 15px 25px; 
     border: none;
     background-color: #1a8917;
     color: white;
     cursor: pointer;
     border-radius: 20px;
+    align-self: flex-start; 
+    margin-top: 20px; 
+    width: auto; 
+}
+
+@media (max-width: 768px) {
+    .ql-toolbar {
+        font-size: 12px;
+        padding: 8px;
+    }
+    
+    .ql-formats {
+        padding: 0 5px;
+    }
+
+    .ql-toolbar button {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .ql-container {
+        min-width: 100%; /* Full width on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .ql-toolbar {
+        font-size: 10px;
+        padding: 5px;
+    }
+    
+    .ql-toolbar button {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+
+    .ql-formats {
+        margin: 0 3px;
+    }
+
+    .ql-container {
+        min-width: 100%; /* Full width on mobile */
+    }
 }
