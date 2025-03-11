@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/utils/auth";
 import { NextResponse } from "next/server";
 import prisma from "@/utils/connect";
 
@@ -10,13 +11,13 @@ export const GET = async (request) => {
     try {
         const where = cat ? { catSlug: cat } : {}; 
 
-        const posts = await prisma.Post.findMany({
+        const posts = await prisma.post.findMany({
             take: POST_PER_PAGE,
             skip: POST_PER_PAGE * (page - 1),
             where, 
         });
 
-        const count = await prisma.Post.count({ where }); // Fix: Use `where` instead of `query.where`
+        const count = await prisma.post.count({ where });
 
         return new NextResponse(JSON.stringify({ posts, count }), { status: 200 });
     } catch (error) {

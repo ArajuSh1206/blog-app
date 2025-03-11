@@ -1,53 +1,73 @@
-"use client";
+"use client"; 
+
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"; // Use to get query params
 import styles from "./cardList.module.css";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
 
-const CardList = ({ page, cat }) => {
+const POST_PER_PAGE = 2;
+
+const CardList = () => {
+  const searchParams = useSearchParams(); // Get params from URL
+  const page = Number(searchParams.get("page")) || 1; // Ensure it's a number
+  const cat = searchParams.get("cat") || ""; // Get category if exists
+
   const [posts, setPosts] = useState([]);
+  const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0); 
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    if (!page) return; // Prevent unnecessary fetch
+
+    const getData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const res = await fetch(`/api/posts?page=${page}&cat=${cat || ""}`);
-        if (!res.ok) {
-          throw new Error("Failed to fetch posts");
-        }
+        const res = await fetch(
+          `http://localhost:3000/api/posts?page=${page}&cat=${cat}`,
+          {
+            cache: "no-store",
+          }
+        );
+
+        if (!res.ok) throw new Error("Failed to fetch posts");
+
         const data = await res.json();
         setPosts(data.posts);
-        setCount(data.count); 
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-        setPosts([]);
+        setCount(data.count);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPosts();
-  }, [page]);
+    getData();
+  }, [page, cat]);
 
-  const POSTS_PER_PAGE = 2;
-  const totalPages = Math.ceil(count / POSTS_PER_PAGE);
-  const hasPrev = page > 1;
-  const hasNext = page < totalPages;
+  const hasPrev = POST_PER_PAGE * (page - 1) > 0;
+  const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Recent Posts</h1>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className={styles.posts}>
-          {posts?.map((item) => (
-            <Card item={item} key={item._id} />
-          ))}
-        </div>
+
+      {loading && <p>Loading...</p>}
+      {error && <p className={styles.error}>Error: {error}</p>}
+
+      {!loading && !error && (
+        <>
+          <div className={styles.posts}>
+            {posts?.map((item) => (
+              <Card item={item} key={item._id} />
+            ))}
+          </div>
+          <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
+        </>
       )}
-      <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
     </div>
   );
 };
