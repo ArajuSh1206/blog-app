@@ -55,3 +55,51 @@ export const POST = async (req) => {
     );
   }
 };
+
+export const DELETE = async (req) => {
+  const session = await getAuthSession();
+
+  if (!session) {
+    return new NextResponse(
+      JSON.stringify({ message: "Not Authenticated" }),
+      { status: 401 }
+    );
+  }
+
+  const { commentId } = await req.json(); // The comment ID to delete
+
+  try {
+    const comment = await prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+
+    if (!comment) {
+      return new NextResponse(
+        JSON.stringify({ message: "Comment not found" }),
+        { status: 404 }
+      );
+    }
+
+    if (comment.userEmail !== session.user.email) {
+      return new NextResponse(
+        JSON.stringify({ message: "Not authorized to delete this comment" }),
+        { status: 403 }
+      );
+    }
+
+    await prisma.comment.delete({
+      where: { id: commentId },
+    });
+
+    return new NextResponse(
+      JSON.stringify({ message: "Comment deleted successfully" }),
+      { status: 200 }
+    );
+  } catch (err) {
+    console.error(err);
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }),
+      { status: 500 }
+    );
+  }
+};
