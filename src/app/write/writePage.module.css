@@ -34,16 +34,22 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow-y: auto; 
+    background-color: white !important;
 }
 
 .ql-editor {
     padding: 20px;
-    background-color: #f8f8f8;
+    background-color: white !important;
     font-size: 20px; 
     line-height: 1.8;
     min-height: 500px; 
     height: auto; 
     word-wrap: break-word; 
+}
+
+.ql-toolbar {
+    background-color: white !important; /* Set the toolbar background to white */
+    border: 1px solid #f0eeee;
 }
 
 .button, .addButton {
