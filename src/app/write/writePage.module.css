@@ -133,3 +133,18 @@
         min-width: 100%; /* Full width on mobile */
     }
 }
+
+.deleteButton {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.deleteButton:hover {
+    background-color: darkred;
+}
+
