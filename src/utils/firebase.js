@@ -1,10 +1,7 @@
-// Import the functions you need from the SDKs you need
+// Update your firebase.js file
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.FIREBASE,
   authDomain: "blog-app-fa076.firebaseapp.com",
@@ -15,23 +12,21 @@ const firebaseConfig = {
   measurementId: "G-TDFJ606VG4"
 };
 
-// Initialize Firebase
 let app;
-let analytics;
+let storage;
 
-// Initialize Firebase only in browser environment
 if (typeof window !== 'undefined') {
   app = initializeApp(firebaseConfig);
+  storage = getStorage(app);
   
-  // Import and initialize analytics dynamically in the browser
   import('firebase/analytics').then(({ getAnalytics }) => {
-    analytics = getAnalytics(app);
+    const analytics = getAnalytics(app);
   }).catch((error) => {
     console.error('Analytics failed to load:', error);
   });
 } else {
-  // Server-side initialization
   app = initializeApp(firebaseConfig);
+  storage = getStorage(app);
 }
 
-export { app };
+export { app, storage };

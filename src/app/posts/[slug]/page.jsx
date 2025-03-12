@@ -4,15 +4,28 @@ import styles from './singlePage.module.css';
 import Menu from '@/component/Menu/Menu';
 import Image from 'next/image';
 import Comments from '@/component/comments/Comments';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { getSession } from 'next-auth/react';
 
 const SinglePage = () => {
   const { slug } = useParams(); 
-  console.log('slug:', slug);
+  const router = useRouter();
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+  const [session, setSession] = useState(null); 
+
+  useEffect(() => {
+    // Fetch session information
+    const fetchSession = async () => {
+      const userSession = await getSession();
+      console.log("Session data:", userSession); // Log full session object
+      setSession(userSession);
+    };
+    
+    fetchSession();
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -33,6 +46,7 @@ const SinglePage = () => {
         if (!res.ok) throw new Error('Failed to fetch post');
 
         const postData = await res.json();
+        console.log("Fetched post data:", postData); // Log fetched post data
         setData(postData);
       } catch (err) {
         setError(err.message);
@@ -46,8 +60,38 @@ const SinglePage = () => {
     }
   }, [slug]);
 
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`/api/posts/${slug}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        router.push("/"); 
+      } else {
+        const errorData = await res.json();
+        alert(errorData.message);
+      }
+    } catch (err) {
+      console.error("Failed to delete post:", err);
+      alert("Something went wrong while deleting the post");
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p className={styles.error}>Error: {error}</p>;
+
+  // Check if current user is the author of the post
+  console.log("Session user ID:", session?.user); // Log the entire session user
+  console.log("Post data:", data?.post); // Log the full post data
+
+  const isAuthor = session?.user?.email === data?.post?.user?.email;
+
+  // Log author check for debugging
+  console.log("Is author:", isAuthor); // Log if the user is the author
 
   return (
     <div className={styles.container}>
@@ -65,13 +109,27 @@ const SinglePage = () => {
               <span className={styles.date}>01.01.2024</span>
             </div>
           </div>
+
+          {/* Only show Delete button if the current user is the post's author */}
+          {isAuthor && (
+            <div className={styles.postActions}>
+              <button 
+                onClick={handleDelete}
+                className={styles.deleteButton}
+              >
+                Delete Post
+              </button>
+            </div>
+          )}
         </div>
+
         {data?.post?.img && (
           <div className={styles.imageContainer}>
             <Image src={data.post.img} alt="" fill className={styles.image} />
           </div>
         )}
       </div>
+
       <div className={styles.content}>
         <div className={styles.post}>
           <div
@@ -85,7 +143,7 @@ const SinglePage = () => {
         <Menu />
       </div>
     </div>
-  );  
+  );
 };
 
 export default SinglePage;

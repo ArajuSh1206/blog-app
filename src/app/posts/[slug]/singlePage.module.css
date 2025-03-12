@@ -100,5 +100,26 @@
     font-size: 18px;
 }
 
+.postActions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .deleteButton {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c53030;
+  }
+
 
 
