@@ -97,7 +97,18 @@ const SinglePage = () => {
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
-          <h1 className={styles.title}>{data?.post?.title}</h1>
+          <h1 className={styles.title}>{data?.post?.title}
+          <span
+            className={`${styles.category} ${
+              data?.post?.catSlug
+                ? styles[data?.post.catSlug.toLowerCase()] || styles.defaultCategory
+                : styles.defaultCategory
+            }`}
+          >
+            {data?.post?.catSlug || "Uncategorized"}
+          </span>
+
+          </h1>
           <div className={styles.user}>
             {data?.post?.user?.image && (
               <div className={styles.userImageContainer}>
@@ -136,6 +147,7 @@ const SinglePage = () => {
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: data?.post?.desc }}
           />
+
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>

@@ -84,37 +84,3 @@ export const DELETE = async (req, { params }) => {
     );
   }
 };
-
-//FIX ONLY BELOW
-
-export const FEATURED = async (req) => {
-  try {
-    const posts = await prisma.post.findMany({
-      orderBy: {
-        views: 'desc',  // Sort by views in descending order
-      },
-      take: 10,  // Limit to the top 10 most viewed posts
-      include: {
-        user: true,  // Optionally include the user who created the post
-      },
-    });
-
-    if (posts.length === 0) {
-      return new NextResponse(
-        JSON.stringify({ message: 'No posts found' }),
-        { status: 404 }
-      );
-    }
-
-    console.log("Most viewed posts:", posts);
-
-    return new NextResponse(JSON.stringify({ posts }), { status: 200 });
-  } catch (err) {
-    console.log(err);
-    return new NextResponse(
-      JSON.stringify({ message: 'Something went wrong!' }),
-      { status: 500 }
-    );
-  }
-};
-

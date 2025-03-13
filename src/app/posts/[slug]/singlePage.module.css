@@ -128,3 +128,40 @@
     outline: none;
     border-color: #ff3333;
 }
+
+.category {
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: white;
+    width: max-content;
+}
+
+/* Category styles with solid background colors */
+.category.style {
+    background-color: #57c4ff; /* Solid blue */
+}
+
+.category.fashion {
+    background-color: #da85c7; /* Solid pink */
+}
+
+.category.food {
+    background-color: #7fb881; /* Solid green */
+}
+
+.category.travel {
+    background-color: #ff7957; /* Solid orange */
+}
+
+.category.culture {
+    background-color: #ffb04f; /* Solid yellow */
+}
+
+.category.coding {
+    background-color: #5e4fff; /* Solid purple */
+}
+
+.category.defaultCategory {
+    background-color: gray; /* Default gray */
+}
