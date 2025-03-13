@@ -1,0 +1,75 @@
+/* Minimalistic and Pleasant Hot Pink Styling */
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #080808; /* Subtle dark gray for the title */
+  font-weight: 500;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input,
+.textarea {
+  padding: 12px;
+  border: 1px solid #ccc; /* Light gray border for a cleaner look */
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #abc161; /* Subtle hot pink for focus */
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.4); /* Subtle pink glow effect */
+  outline: none;
+}
+
+.textarea {
+  height: 120px;
+  resize: none;
+}
+
+.button {
+  padding: 12px;
+  background-color: #abc161; /* Hot pink background */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background-color: #abc161; /* Lighter pink on hover */
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.status {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #333; /* Neutral gray for status messages */
+  font-weight: 400;
+}
