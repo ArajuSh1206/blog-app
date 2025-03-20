@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/utils/connect';
 
+export const dynamic = 'force-dynamic';
+
 export const GET = async (req) => {
   try {
     // Get the URL object to extract query parameters
