@@ -2,6 +2,8 @@ import { getAuthSession } from "@/utils/auth";
 import { NextResponse } from "next/server";
 import prisma from "@/utils/connect";
 
+export const dynamic = 'force-dynamic';
+
 export const GET = async (request) => {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
