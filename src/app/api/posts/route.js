@@ -2,7 +2,7 @@ import { getAuthSession } from "@/utils/auth";
 import { NextResponse } from "next/server";
 import prisma from "@/utils/connect";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export const GET = async (request) => {
     const { searchParams } = new URL(request.url);
@@ -11,17 +11,20 @@ export const GET = async (request) => {
     const cat = searchParams.get("cat") || "";
 
     try {
-        const where = cat ? { catSlug: cat } : {}; 
+        const where = cat ? { catSlug: cat } : {};
 
         const posts = await prisma.post.findMany({
             take: POST_PER_PAGE,
             skip: POST_PER_PAGE * (page - 1),
-            where, 
+            where,
         });
 
         const count = await prisma.post.count({ where });
 
-        return new NextResponse(JSON.stringify({ posts, count }), { status: 200 });
+        return new NextResponse(
+            JSON.stringify({ posts, count }),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        );
     } catch (error) {
         console.error(error);
         return new NextResponse(
@@ -31,29 +34,32 @@ export const GET = async (request) => {
     }
 };
 
-//Create a post for write jsx
+// Create a post for write JSX
 export const POST = async (req) => {
     const session = await getAuthSession();
-  
-    if(!session) {
-      return new NextResponse(
-        JSON.stringify({ message: "Not Authenticated"}, {status: 401})
-      )
+
+    if (!session) {
+        return new NextResponse(
+            JSON.stringify({ message: "Not Authenticated" }),
+            { status: 401 }
+        );
     }
-  
+
     try {
-      const body = await req.json();
-      const post = await prisma.post.create({
-        data: { ...body, userEmail: session.user.email },
-      })
-  
-      return new NextResponse(JSON.stringify( post, { status: 200 }));
+        const body = await req.json();
+        const post = await prisma.post.create({
+            data: { ...body, userEmail: session.user.email },
+        });
+
+        return new NextResponse(
+            JSON.stringify(post),
+            { status: 201, headers: { "Content-Type": "application/json" } }
+        );
     } catch (err) {
-      console.log(err);
-      return new NextResponse(
-        JSON.stringify({ message: 'Something went wrong!' }),
-        { status: 500 }
-      );
+        console.error(err);
+        return new NextResponse(
+            JSON.stringify({ message: "Something went wrong!" }),
+            { status: 500 }
+        );
     }
-  };
-  
+};
