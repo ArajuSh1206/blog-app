@@ -39,7 +39,7 @@ const SinglePage = () => {
       setError(null);
 
       try {
-        const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/${slug}`, {
           cache: 'no-store',
         });
 

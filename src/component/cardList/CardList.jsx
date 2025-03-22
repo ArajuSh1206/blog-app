@@ -27,7 +27,7 @@ const CardList = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:3000/api/posts?page=${page}&cat=${cat}`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?page=${page}&cat=${cat}`,
           {
             cache: "no-store",
           }

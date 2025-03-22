@@ -12,7 +12,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/categories", {
+        const res = await fetch("${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories", {
           cache: "no-store",
         });
 
