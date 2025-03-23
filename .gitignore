@@ -5,3 +5,4 @@ out/
 createUser.js
 testMongo.js
 testPrisma.js
+.vercel
