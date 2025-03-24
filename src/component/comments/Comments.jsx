@@ -88,7 +88,13 @@ const Comments = ({postSlug}) => {
                         />}
                     <div className= {styles.userInfo}>
                         <span className = {styles.username}> {item.user.name} </span>
-                        <span className = {styles.date}> {item.createdAt} </span>
+                        <span className = {styles.date}>
+                            {new Date(item?.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                            })}    
+                         </span>
                     </div>
                         </div>
                             <p className={styles.desc}>{item.desc}</p>

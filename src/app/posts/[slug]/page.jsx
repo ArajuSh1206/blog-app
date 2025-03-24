@@ -116,10 +116,14 @@ const SinglePage = () => {
                 <Image src={data.post.user.image} alt="" fill className={styles.avatar} />
               </div>
             )}
-            <div className={styles.userTextContainer}>
-              <span className={styles.username}>{data?.post?.user?.name}</span>
-              <span className={styles.date}>01.01.2024</span>
-            </div>
+          <div className={styles.userTextContainer}>
+            <span className={styles.username}>{data?.post?.user?.name}</span>
+            {new Date(data?.post?.createdAt).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </div>
           </div>
 
           {/* Only show Delete button if the current user is the post's author */}
