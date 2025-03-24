@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { baseUrl } from "@/utils/api";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -12,7 +13,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("${process.env.NEXTAUTH_URL}/api/categories", {
+        const res = await fetch(`${baseUrl}/api/categories`, {
           cache: "no-store",
         });
 

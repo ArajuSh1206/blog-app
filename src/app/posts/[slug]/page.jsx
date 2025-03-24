@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Comments from '@/component/comments/Comments';
 import { useParams, useRouter } from 'next/navigation';
 import { getSession } from 'next-auth/react';
+import { baseUrl } from '@/utils/api';
 
 const SinglePage = () => {
   const { slug } = useParams(); 
@@ -39,7 +40,7 @@ const SinglePage = () => {
       setError(null);
 
       try {
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${slug}`, {
+        const res = await fetch(`${baseUrl}/api/posts/${slug}`, {
           cache: 'no-store',
         });
 

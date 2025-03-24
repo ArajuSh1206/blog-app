@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation"; // Use to get query params
 import styles from "./cardList.module.css";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
+import { baseUrl } from "@/utils/api";
 
 const POST_PER_PAGE = 2;
 
@@ -27,7 +28,7 @@ const CardList = () => {
 
       try {
         const res = await fetch(
-          `${process.env.NEXTAUTH_URL}/api/posts?page=${page}&cat=${cat}`,
+          `${baseUrl}/api/posts?page=${page}&cat=${cat}`,
           {
             cache: "no-store",
           }

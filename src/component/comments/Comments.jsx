@@ -5,6 +5,7 @@ import Link from 'next/link';
 import useSWR from 'swr';
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react'
+import { baseUrl } from "@/utils/api";
 
 const fetcher = async (url) => {
     const res = await fetch(url);
@@ -20,7 +21,7 @@ const fetcher = async (url) => {
 const Comments = ({postSlug}) => {
     const {status, data: sessionData } = useSession()
 
-    const {data, mutate, isLoading} = useSWR(`${process.env.NEXTAUTH_URL}/api/comments?postSlug=${postSlug}`, fetcher)
+    const {data, mutate, isLoading} = useSWR(`${baseUrl}/api/comments?postSlug=${postSlug}`, fetcher)
     const [desc, setDesc] = useState("");
 
     const handleSubmit = async () => {
