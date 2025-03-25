@@ -148,11 +148,21 @@ const SinglePage = () => {
 
       <div className={styles.content}>
         <div className={styles.post}>
-          <div
-            className={styles.description}
-            dangerouslySetInnerHTML={{ __html: data?.post?.desc }}
-          />
+        <div className={styles.description}>
+            {(() => {
+              if (!data?.post?.desc) return null;
 
+              const tempDiv = document.createElement("div");
+              tempDiv.innerHTML = data.post.desc;
+
+              const firstImage = tempDiv.querySelector("img");
+              if (firstImage && firstImage.src === data.post.img) {
+                firstImage.remove();
+              }
+
+              return <div dangerouslySetInnerHTML={{ __html: tempDiv.innerHTML }} />;
+            })()}
+          </div>
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>
