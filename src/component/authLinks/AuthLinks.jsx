@@ -9,6 +9,11 @@ const AuthLinks = () => {
 
   const { status } = useSession();
 
+    // helper to close the menu after click
+    const handleLinkClick = () => {
+      setOpen(false);
+    };
+
   return (
     <>
       {status === "unauthenticated" ? (
@@ -32,11 +37,11 @@ const AuthLinks = () => {
       </div>
       {open && (
         <div className={styles.responsiveMenu}>
-          <Link href="/">Homepage</Link>
-          <Link href="/">About</Link>
-          <Link href="/">Contact</Link>
-          {status === "notauthenticated" ? (
-            <Link href="/login">Login</Link>
+          <Link href="/" onClick={handleLinkClick}>Homepage</Link>
+          <Link href="/" onClick={handleLinkClick}>About</Link>
+          <Link href="/contact" onClick={handleLinkClick}>Contact</Link>
+          {status === "unauthenticated" ? (
+            <Link href="/login" onClick={handleLinkClick}>Login</Link>
           ) : (
             <>
               <Link href="/write">Write</Link>
