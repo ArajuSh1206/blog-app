@@ -23,7 +23,6 @@ const LoginPage = () => {
           Sign in with Google
         </div>
         <div className={styles.socialButton}>Sign in with Github</div>
-        <div className={styles.socialButton}>Sign in with Facebook</div>
       </div>
     </div>
   );

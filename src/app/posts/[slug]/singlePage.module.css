@@ -86,7 +86,12 @@
 
 @media screen and (max-width: 1024px) {
     .imageContainer {
-        display: none;
+        width: 400px;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+      
     }
 }
 

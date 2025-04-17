@@ -139,16 +139,25 @@ const SinglePage = () => {
           )}
         </div>
 
+        {/* Desktop image */}
         {data?.post?.img && (
-          <div className={styles.imageContainer}>
+          <div className={`${styles.imageContainer} ${styles.imageContainerDesktop}`}>
             <Image src={data.post.img} alt="" fill className={styles.image} />
           </div>
         )}
+
       </div>
 
       <div className={styles.content}>
         <div className={styles.post}>
         <div className={styles.description}>
+          {/* Mobile image */}
+          {data?.post?.img && (
+            <div className={`${styles.imageContainer} ${styles.imageContainerMobile}`}>
+              <Image src={data.post.img} alt="" fill className={styles.image} />
+            </div>
+          )}
+
             {(() => {
               if (!data?.post?.desc) return null;
 
