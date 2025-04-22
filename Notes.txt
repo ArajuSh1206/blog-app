@@ -1,344 +1,74 @@
-MYDAIRY
-Using Asp.net 9.2 and c#
+Blog-App
 
-Download asp.net via microsoft
-Install mvc within the folder
-dotnet new mvc -o MyDairy
-cd MyDairy
-code .
-dotnet build - dotnet run
-My Diary.csproj stores developer env for smooth run
-Launsettings stores env for running the app. I.e local host for app for http or https and production or dev env.
-My dependencies are stored within ItemGroup in .csproj file.
-Wwwroot contains front end file
-http://localhost:5103/css/site.css shows all css scripts
-Same with http://localhost:5103/js/site.js
-dotnet script filename.csx
+Git clone the repo first (starter branch)
+Git clone –single-branch -b starter https://github.com/safak/next-blog.git .
+Next do, npm install to install all necessary plugins 
+http://localhost:3000 
+Created all front ends component using next.js and react
+For write functionality in blog to showcase bold, style, options for text used (npm install react-quill)
 
 
-1. Run .NET Commands in VS Code Terminal
-Open the terminal in VS Code (Ctrl + ~) and use the following:
-Basic .NET Commands
-Command
-Description
-dotnet new <template>
-Create a new project (e.g., dotnet new mvc -n MyApp)
-dotnet restore
-Restore dependencies
-dotnet build
-Build the project
-dotnet run
-Run the project
-dotnet watch run
-Auto-restart on code changes
-dotnet publish
-Publish for deployment
-dotnet clean
-Clean the project (remove build files)
+
+Once all front end is complete, we install auth js to complete auth format for login/ logout
+https://console.cloud.google.com/apis/credentials?project=midyear-grid-452722-s9 
+Click on oauth and web application, fill out info
+In the web url put local host and redirected one put localhost/api/auth/callback/google
+Copy client id & secret (google client id and client secret
+Now create auth.js, .env, and route.js. Sould allow you to login via google now.
+
+DATABASE_URL="mongodb+srv://ArajuSharma:<db_password>@cluster0.eoaqh.mongodb.net/blog-app?retryWrites=true&w=majority&appName=Cluster0"
+
+Stacks used : next.js, mongodb, prisma.
+Connect prisma to mongodb via 
+In prisma to add posts you have to select user and category from list
+Issues I struggled with was params for new nextjs ver 13,
+I also struggled with slug issues and using param await correctly do it doesnt render the page repeatedly and the importance of clearing cache so it doesnt resender the page over and over again
+Server client side difference will use effects and use router
+Use SWR instead of usestate or use effect
+Npm install swr
+For write jsx, use firebase to store pictures messages, and others. 
+https://console.firebase.google.com/u/0/project/blog-app-fa076/overview
+Create projects, app nickname -> npm install firebase
+In utils create firebase.js then paste initialization code
+This leads to prisma local host
 
 
-2. .NET Project Management
-Command
-Description
-dotnet --version
-Check installed .NET version
-dotnet --list-sdks
-List installed SDKs
-dotnet list package
-List installed NuGet packages
-dotnet add package <package_name>
-Install a NuGet package
-dotnet remove package <package_name>
-Remove a NuGet package
 
-Example:
-sh
+ Prerequisites:
+Install Prisma CLI: Ensure Prisma CLI is installed globally or locally in your project.
+Set up a Database: Set up a local database instance (e.g., PostgreSQL, MySQL, SQLite, MongoDB).
+Prisma Schema: Create a schema.prisma file to define your data model and database connection.
+2. Configure the Connection URL:
+Database Connection URL: In the schema.prisma file, the url field specifies how Prisma Client connects to the database. Example (for PostgreSQL):
+
+ prisma
 CopyEdit
-dotnet add package Microsoft.EntityFrameworkCore
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://<user>:<password>@<host>:<port>/<database>?sslmode=disable"
+}
+ Replace <user>, <password>, <host>, <port>, and <database> with your actual credentials.
 
 
-3. Entity Framework Core (EF Core) for Database Management
-Command
-Description
-dotnet ef migrations add <name>
-Create a new database migration
-dotnet ef database update
-Apply migrations to the database
-dotnet ef migrations remove
-Remove last migration
-dotnet ef dbcontext list
-List available DbContexts
-dotnet ef dbcontext info
-Show DbContext details
+Environment Variables: Store sensitive information like passwords in environment variables instead of hardcoding them in the schema file.
 
-Example:
-sh
+
+3. Run Prisma Studio:
+Open your terminal and navigate to the root directory of your Prisma project.
+Run the command:
+ bash
 CopyEdit
-dotnet ef migrations add InitialCreate
-dotnet ef database update
+npx prisma studio
 
-📌 Note: Install EF CLI tools first if you haven't:
-sh
-CopyEdit
-dotnet tool install --global dotnet-ef
 
 
-4. Debugging & Testing
-Command
-Description
-dotnet test
-Run unit tests
-dotnet watch test
-Auto-run tests on file changes
-dotnet vstest <test.dll>
-Run specific test DLL
+https://cloud.mongodb.com/v2/67c78d3399808e2b1878fd7a#/metrics/replicaSet/67c78ee85332715e9e35623a/explorer/blog-app/Session/find 
+https://console.firebase.google.com/u/0/project/blog-app-fa076/storage/blog-app-fa076.firebasestorage.app/files
+Also need to make sure the images on fire base after posting is deleted
+Dont forget to add the .eslintrc.json file when uploading to github bc it doesnt save it
+{
+   "extends": "next/core-web-vitals"
+ }
+Then install npm install next, the blog should run
 
 
-5. Using .NET Interactive in VS Code
-To get more integrated features:
-Install the .NET Extension Pack from VS Code Marketplace.
-
-
-Use the Command Palette (Ctrl + Shift + P) and search for .NET commands.
-
-
-
-6. Running a Specific File
-If you don’t want to use dotnet run, try:
-Using C# extension:
-
-
-Install the C# Dev Kit from VS Code.
-
-
-Open a .cs file and click Run on the top right.
-
-
-Running a single C# file:
-
- sh
-CopyEdit
-dotnet script <filename>.csx
- (Requires dotnet-script package: dotnet tool install --global dotnet-script)
-
-
-
-7. Managing Workloads
-For missing workloads, use:
-sh
-CopyEdit
-dotnet workload install <workload-name>
-dotnet workload update
-dotnet workload list
-
-Example:
-sh
-CopyEdit
-dotnet workload install wasm-tools
-
-
-INSTALL DOCKER ON MAC + MSSQL EXPRESS SERVER VIA DOCKER AND INSTALL AZURE
-
-Navigate to Your Project Folder
-First, open the terminal and go to your MyDiary folder:
-sh
-CopyEdit
-cd ~/Desktop/untitled\ folder/MyDiary
-
-
-2. Run SQL Server Express with Docker
-Run the following command to start SQL Server Express 2022 with database storage in your MyDiary folder:
-sh
-CopyEdit
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourStrongPassword!" \
-   -p 1433:1433 --name sqlserver_express \
-   -v "$(pwd)/mssql-data:/var/opt/mssql" \
-   -d mcr.microsoft.com/mssql/server:2022-latest
-
-Explanation of the command:
--e "ACCEPT_EULA=Y" → Accepts the SQL Server license.
-
-
--e "MSSQL_SA_PASSWORD=YourStrongPassword!" → Sets the SA (System Admin) password (must be strong).
-
-
--p 1433:1433 → Exposes SQL Server on port 1433.
-
-
---name sqlserver_express → Names the container.
-
-
--v "$(pwd)/mssql-data:/var/opt/mssql" → Mounts the mssql-data folder in MyDiary to store database files persistently.
-
-
--d → Runs the container in detached mode (background process).
-
-
-mcr.microsoft.com/mssql/server:2022-latest → Uses SQL Server 2022 Express.
-
-
-
-3. Verify SQL Server is Running
-Check running containers:
-sh
-CopyEdit
-docker ps
-
-If you see sqlserver_express, it means SQL Server is running.
-If the container is not running, start it with:
-sh
-CopyEdit
-docker start sqlserver_express
-
-
-4. Connect to SQL Server Express
-Option 1: Using Azure Data Studio (DO AUTH WITH SQL LOGIN)
-Download Azure Data Studio
-
-
-Open Azure Data Studio → New Connection
-
-
-Server: localhost,1433
-
-
-Authentication: SQL Login
-
-
-Username: sa
-
-
-Password: YourStrongPassword!
-
-
-Click Connect.
-
-
-
-Option 2: Using SQL CLI (mssql-cli)
-Install mssql-cli:
-
- sh
-CopyEdit
-brew install mssql-cli
-
-
-Connect:
-
- sh
-CopyEdit
-mssql-cli -S localhost -U sa -P YourStrongPassword!
-
-
-Run:
-
- sql
-CopyEdit
-SELECT name FROM sys.databases;
-
-
-
-Option 3: Using VS Code
-Install SQL Server (mssql) extension.
-
-
-Open the Command Palette (Cmd + Shift + P) → "SQL: Connect".
-
-
-Enter:
-
-
-Server: localhost,1433
-
-
-Authentication: SQL Login
-
-
-Username: sa
-
-
-Password: YourStrongPassword!
-
-
-Click Connect.
-
-
-
-5. Managing SQL Server Container
-Stop SQL Server
-sh
-CopyEdit
-docker stop sqlserver_express
-
-Restart SQL Server
-sh
-CopyEdit
-docker start sqlserver_express
-
-View Logs
-sh
-CopyEdit
-docker logs sqlserver_express
-
-Remove SQL Server Container
-sh
-CopyEdit
-docker rm -f sqlserver_express
-
-
-Now, your SQL Server Express 2022 runs in MyDiary/mssql-data, making sure your database persists across restarts. Let me know if you need help! 🚀
-4o
-
-
-
-
-HOW ENV WORKS
-
-dotnet add package DotNetEnv
-
-Then create .env, store db password for connection string from azure and mssql 
-
-TO add migration instead of nuget, you use dotnet ef
-dotnet ef migrations add AddDiaryEntryTable - dotnet ef database update
-This basically created a route from DataEntry.cs connect it to Data/ ApplicationDbContext and to fetch it from the database in Migration/ folder. Can recreate all db this way in future projects. 🙂
-
-In ASP.net you can do unit testing by isolating action methods, simulate dependencies.
-
-Best Practices fo Controllers
-Separation of concerns: Delegate logic to services
-Dependencies injection: Manage dependecneis, ease testing.
-Keep controllers lightweight : Avoid excessive logic.
-
-Security Considerations for Controllers
-Input validation: Validate inputs to prevent attacks
-Authentication and Authorization: Verify identities, control resource access.
-Data Protection: Uses https, encrypt data, follow best practices.
-
-Controller vs Service Layers
-Controller : Handle http request, return responses.
-Service layer: Business logic and data processing
-
-Real World Examples of Controllers
-E-commerce Application: Manage products, authentication, orders
-Social Media Platorm: User profiles, posts, interactions
-Content Management System: Content creation, publishing, access control
-
-Routing
-
-       [Route("WriteEntries")]
-       public IActionResult WriteEntries()
-       {
-           return View();
-       }
-
-
-       [HttpPost]
-       public IActionResult WriteEntries(DiaryEntry obj)
-       {
-           return View();
-       }
-
-
-The above code from DiaryEntriesController Connects to WriteEntry.cshtml
-@model  DiaryEntry on the top
-When it hit submit, will post
