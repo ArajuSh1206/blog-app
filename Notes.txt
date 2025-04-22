@@ -1,0 +1,344 @@
+MYDAIRY
+Using Asp.net 9.2 and c#
+
+Download asp.net via microsoft
+Install mvc within the folder
+dotnet new mvc -o MyDairy
+cd MyDairy
+code .
+dotnet build - dotnet run
+My Diary.csproj stores developer env for smooth run
+Launsettings stores env for running the app. I.e local host for app for http or https and production or dev env.
+My dependencies are stored within ItemGroup in .csproj file.
+Wwwroot contains front end file
+http://localhost:5103/css/site.css shows all css scripts
+Same with http://localhost:5103/js/site.js
+dotnet script filename.csx
+
+
+1. Run .NET Commands in VS Code Terminal
+Open the terminal in VS Code (Ctrl + ~) and use the following:
+Basic .NET Commands
+Command
+Description
+dotnet new <template>
+Create a new project (e.g., dotnet new mvc -n MyApp)
+dotnet restore
+Restore dependencies
+dotnet build
+Build the project
+dotnet run
+Run the project
+dotnet watch run
+Auto-restart on code changes
+dotnet publish
+Publish for deployment
+dotnet clean
+Clean the project (remove build files)
+
+
+2. .NET Project Management
+Command
+Description
+dotnet --version
+Check installed .NET version
+dotnet --list-sdks
+List installed SDKs
+dotnet list package
+List installed NuGet packages
+dotnet add package <package_name>
+Install a NuGet package
+dotnet remove package <package_name>
+Remove a NuGet package
+
+Example:
+sh
+CopyEdit
+dotnet add package Microsoft.EntityFrameworkCore
+
+
+3. Entity Framework Core (EF Core) for Database Management
+Command
+Description
+dotnet ef migrations add <name>
+Create a new database migration
+dotnet ef database update
+Apply migrations to the database
+dotnet ef migrations remove
+Remove last migration
+dotnet ef dbcontext list
+List available DbContexts
+dotnet ef dbcontext info
+Show DbContext details
+
+Example:
+sh
+CopyEdit
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
+📌 Note: Install EF CLI tools first if you haven't:
+sh
+CopyEdit
+dotnet tool install --global dotnet-ef
+
+
+4. Debugging & Testing
+Command
+Description
+dotnet test
+Run unit tests
+dotnet watch test
+Auto-run tests on file changes
+dotnet vstest <test.dll>
+Run specific test DLL
+
+
+5. Using .NET Interactive in VS Code
+To get more integrated features:
+Install the .NET Extension Pack from VS Code Marketplace.
+
+
+Use the Command Palette (Ctrl + Shift + P) and search for .NET commands.
+
+
+
+6. Running a Specific File
+If you don’t want to use dotnet run, try:
+Using C# extension:
+
+
+Install the C# Dev Kit from VS Code.
+
+
+Open a .cs file and click Run on the top right.
+
+
+Running a single C# file:
+
+ sh
+CopyEdit
+dotnet script <filename>.csx
+ (Requires dotnet-script package: dotnet tool install --global dotnet-script)
+
+
+
+7. Managing Workloads
+For missing workloads, use:
+sh
+CopyEdit
+dotnet workload install <workload-name>
+dotnet workload update
+dotnet workload list
+
+Example:
+sh
+CopyEdit
+dotnet workload install wasm-tools
+
+
+INSTALL DOCKER ON MAC + MSSQL EXPRESS SERVER VIA DOCKER AND INSTALL AZURE
+
+Navigate to Your Project Folder
+First, open the terminal and go to your MyDiary folder:
+sh
+CopyEdit
+cd ~/Desktop/untitled\ folder/MyDiary
+
+
+2. Run SQL Server Express with Docker
+Run the following command to start SQL Server Express 2022 with database storage in your MyDiary folder:
+sh
+CopyEdit
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourStrongPassword!" \
+   -p 1433:1433 --name sqlserver_express \
+   -v "$(pwd)/mssql-data:/var/opt/mssql" \
+   -d mcr.microsoft.com/mssql/server:2022-latest
+
+Explanation of the command:
+-e "ACCEPT_EULA=Y" → Accepts the SQL Server license.
+
+
+-e "MSSQL_SA_PASSWORD=YourStrongPassword!" → Sets the SA (System Admin) password (must be strong).
+
+
+-p 1433:1433 → Exposes SQL Server on port 1433.
+
+
+--name sqlserver_express → Names the container.
+
+
+-v "$(pwd)/mssql-data:/var/opt/mssql" → Mounts the mssql-data folder in MyDiary to store database files persistently.
+
+
+-d → Runs the container in detached mode (background process).
+
+
+mcr.microsoft.com/mssql/server:2022-latest → Uses SQL Server 2022 Express.
+
+
+
+3. Verify SQL Server is Running
+Check running containers:
+sh
+CopyEdit
+docker ps
+
+If you see sqlserver_express, it means SQL Server is running.
+If the container is not running, start it with:
+sh
+CopyEdit
+docker start sqlserver_express
+
+
+4. Connect to SQL Server Express
+Option 1: Using Azure Data Studio (DO AUTH WITH SQL LOGIN)
+Download Azure Data Studio
+
+
+Open Azure Data Studio → New Connection
+
+
+Server: localhost,1433
+
+
+Authentication: SQL Login
+
+
+Username: sa
+
+
+Password: YourStrongPassword!
+
+
+Click Connect.
+
+
+
+Option 2: Using SQL CLI (mssql-cli)
+Install mssql-cli:
+
+ sh
+CopyEdit
+brew install mssql-cli
+
+
+Connect:
+
+ sh
+CopyEdit
+mssql-cli -S localhost -U sa -P YourStrongPassword!
+
+
+Run:
+
+ sql
+CopyEdit
+SELECT name FROM sys.databases;
+
+
+
+Option 3: Using VS Code
+Install SQL Server (mssql) extension.
+
+
+Open the Command Palette (Cmd + Shift + P) → "SQL: Connect".
+
+
+Enter:
+
+
+Server: localhost,1433
+
+
+Authentication: SQL Login
+
+
+Username: sa
+
+
+Password: YourStrongPassword!
+
+
+Click Connect.
+
+
+
+5. Managing SQL Server Container
+Stop SQL Server
+sh
+CopyEdit
+docker stop sqlserver_express
+
+Restart SQL Server
+sh
+CopyEdit
+docker start sqlserver_express
+
+View Logs
+sh
+CopyEdit
+docker logs sqlserver_express
+
+Remove SQL Server Container
+sh
+CopyEdit
+docker rm -f sqlserver_express
+
+
+Now, your SQL Server Express 2022 runs in MyDiary/mssql-data, making sure your database persists across restarts. Let me know if you need help! 🚀
+4o
+
+
+
+
+HOW ENV WORKS
+
+dotnet add package DotNetEnv
+
+Then create .env, store db password for connection string from azure and mssql 
+
+TO add migration instead of nuget, you use dotnet ef
+dotnet ef migrations add AddDiaryEntryTable - dotnet ef database update
+This basically created a route from DataEntry.cs connect it to Data/ ApplicationDbContext and to fetch it from the database in Migration/ folder. Can recreate all db this way in future projects. 🙂
+
+In ASP.net you can do unit testing by isolating action methods, simulate dependencies.
+
+Best Practices fo Controllers
+Separation of concerns: Delegate logic to services
+Dependencies injection: Manage dependecneis, ease testing.
+Keep controllers lightweight : Avoid excessive logic.
+
+Security Considerations for Controllers
+Input validation: Validate inputs to prevent attacks
+Authentication and Authorization: Verify identities, control resource access.
+Data Protection: Uses https, encrypt data, follow best practices.
+
+Controller vs Service Layers
+Controller : Handle http request, return responses.
+Service layer: Business logic and data processing
+
+Real World Examples of Controllers
+E-commerce Application: Manage products, authentication, orders
+Social Media Platorm: User profiles, posts, interactions
+Content Management System: Content creation, publishing, access control
+
+Routing
+
+       [Route("WriteEntries")]
+       public IActionResult WriteEntries()
+       {
+           return View();
+       }
+
+
+       [HttpPost]
+       public IActionResult WriteEntries(DiaryEntry obj)
+       {
+           return View();
+       }
+
+
+The above code from DiaryEntriesController Connects to WriteEntry.cshtml
+@model  DiaryEntry on the top
+When it hit submit, will post
